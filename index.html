@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Heart Disease Risk Predictor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🫀 AI Heart Disease Risk Predictor</h1>
+            <p>Advanced machine learning model trained on clinical data to predict heart disease risk based on key health parameters</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Input Form Section -->
+            <div class="card">
+                <h2>Patient Health Parameters</h2>
+                <form id="predictionForm">
+                    <div class="form-grid">
+                        <!-- Age -->
+                        <div class="form-group">
+                            <label class="form-label" for="age">Age</label>
+                            <span class="form-description">Patient's age in years (29-80)</span>
+                            <input type="number" id="age" name="age" class="form-control" min="29" max="80" required>
+                        </div>
+
+                        <!-- Sex -->
+                        <div class="form-group">
+                            <label class="form-label">Sex</label>
+                            <span class="form-description">Biological sex</span>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="sex" value="1" required>
+                                    Male
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="sex" value="0">
+                                    Female
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Chest Pain Type -->
+                        <div class="form-group">
+                            <label class="form-label" for="cp">Chest Pain Type</label>
+                            <span class="form-description">Type of chest pain experienced</span>
+                            <select id="cp" name="cp" class="form-control" required>
+                                <option value="">Select...</option>
+                                <option value="0">Typical Angina</option>
+                                <option value="1">Atypical Angina</option>
+                                <option value="2">Non-Anginal Pain</option>
+                                <option value="3">Asymptomatic</option>
+                            </select>
+                        </div>
+
+                        <!-- Resting Blood Pressure -->
+                        <div class="form-group">
+                            <label class="form-label" for="trestbps">Resting Blood Pressure</label>
+                            <span class="form-description">Blood pressure at rest (90-200 mm Hg)</span>
+                            <input type="number" id="trestbps" name="trestbps" class="form-control" min="90" max="200" required>
+                        </div>
+
+                        <!-- Serum Cholesterol -->
+                        <div class="form-group">
+                            <label class="form-label" for="chol">Serum Cholesterol</label>
+                            <span class="form-description">Cholesterol level (100-600 mg/dl)</span>
+                            <input type="number" id="chol" name="chol" class="form-control" min="100" max="600" required>
+                        </div>
+
+                        <!-- Fasting Blood Sugar -->
+                        <div class="form-group">
+                            <label class="form-label">Fasting Blood Sugar</label>
+                            <span class="form-description">Fasting blood sugar &gt; 120 mg/dl</span>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="fbs" value="1" required>
+                                    Yes (&gt; 120 mg/dl)
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="fbs" value="0">
+                                    No (≤ 120 mg/dl)
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Resting ECG -->
+                        <div class="form-group">
+                            <label class="form-label" for="restecg">Resting ECG Results</label>
+                            <span class="form-description">Resting electrocardiographic results</span>
+                            <select id="restecg" name="restecg" class="form-control" required>
+                                <option value="">Select...</option>
+                                <option value="0">Normal</option>
+                                <option value="1">ST-T Wave Abnormality</option>
+                                <option value="2">Left Ventricular Hypertrophy</option>
+                            </select>
+                        </div>
+
+                        <!-- Maximum Heart Rate -->
+                        <div class="form-group">
+                            <label class="form-label" for="thalach">Maximum Heart Rate</label>
+                            <span class="form-description">Max heart rate during exercise (60-220 bpm)</span>
+                            <input type="number" id="thalach" name="thalach" class="form-control" min="60" max="220" required>
+                        </div>
+
+                        <!-- Exercise Induced Angina -->
+                        <div class="form-group">
+                            <label class="form-label">Exercise Induced Angina</label>
+                            <span class="form-description">Angina induced by exercise</span>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="exang" value="1" required>
+                                    Yes
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="exang" value="0">
+                                    No
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- ST Depression -->
+                        <div class="form-group">
+                            <label class="form-label" for="oldpeak">ST Depression (Oldpeak)</label>
+                            <span class="form-description">ST depression by exercise (0-6.2)</span>
+                            <input type="number" id="oldpeak" name="oldpeak" class="form-control" min="0" max="6.2" step="0.1" required>
+                        </div>
+
+                        <!-- Slope -->
+                        <div class="form-group">
+                            <label class="form-label" for="slope">Slope of Peak Exercise ST</label>
+                            <span class="form-description">Slope of the peak exercise ST segment</span>
+                            <select id="slope" name="slope" class="form-control" required>
+                                <option value="">Select...</option>
+                                <option value="0">Upsloping</option>
+                                <option value="1">Flat</option>
+                                <option value="2">Downsloping</option>
+                            </select>
+                        </div>
+
+                        <!-- Number of Vessels -->
+                        <div class="form-group">
+                            <label class="form-label" for="ca">Number of Major Vessels</label>
+                            <span class="form-description">Number colored by fluoroscopy (0-3)</span>
+                            <select id="ca" name="ca" class="form-control" required>
+                                <option value="">Select...</option>
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </div>
+
+                        <!-- Thalassemia -->
+                        <div class="form-group">
+                            <label class="form-label" for="thal">Thalassemia</label>
+                            <span class="form-description">Thalassemia test result</span>
+                            <select id="thal" name="thal" class="form-control" required>
+                                <option value="">Select...</option>
+                                <option value="0">Normal</option>
+                                <option value="1">Fixed Defect</option>
+                                <option value="2">Reversible Defect</option>
+                                <option value="3">Not Described</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="error-message" id="errorMessage"></div>
+                    <button type="submit" class="btn btn-primary" id="predictBtn">Predict Risk</button>
+                </form>
+            </div>
+
+            <!-- Results Section -->
+            <div>
+                <div class="loading-spinner" id="loadingSpinner">
+                    <div class="spinner"></div>
+                    <p>Analyzing health parameters...</p>
+                </div>
+
+                <div class="card results-section" id="resultsSection">
+                    <h2>Prediction Results</h2>
+                    
+                    <div id="resultBox" class="result-box">
+                        <div class="result-icon" id="resultIcon">⚠️</div>
+                        <div class="result-title" id="resultTitle">HIGH RISK</div>
+                        <div class="confidence" id="resultConfidence">Confidence: 85%</div>
+                    </div>
+
+                    <div class="probability-bars">
+                        <div class="probability-item">
+                            <div class="probability-label">
+                                <span>No Disease Probability</span>
+                                <span id="noDiseasePercent">45%</span>
+                            </div>
+                            <div class="probability-bar">
+                                <div class="probability-fill" id="noDiseaseFill" style="width: 45%;"></div>
+                            </div>
+                        </div>
+                        <div class="probability-item">
+                            <div class="probability-label">
+                                <span>Disease Probability</span>
+                                <span id="diseasePercent">55%</span>
+                            </div>
+                            <div class="probability-bar">
+                                <div class="probability-fill high" id="diseaseFill" style="width: 55%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="interpretation" id="interpretation">
+                        Based on the provided health parameters, the model indicates a moderate to high risk of heart disease.
+                    </div>
+
+                    <button class="btn btn-secondary" id="resetBtn">Reset Form</button>
+                </div>
+
+                <!-- Info Section -->
+                <div class="info-section">
+                    <div class="info-card">
+                        <h3>📊 About This Tool</h3>
+                        <p>This AI-powered predictor uses advanced machine learning algorithms trained on the UCI Heart Disease Dataset containing 303 patient samples with 13 key health features.</p>
+                        
+                        <div class="model-chart">
+                            <img src="https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/b443e2c3e6b1ad65268497705903a166/972070d8-e7f9-4187-885a-d70c98b120c0/2c5673b4.png" alt="Model Performance Comparison">
+                        </div>
+                        
+                        <p><strong>Algorithms Evaluated:</strong></p>
+                        <ul>
+                            <li>Logistic Regression (Best: 62.3% accuracy)</li>
+                            <li>Support Vector Machine</li>
+                            <li>Gradient Boosting</li>
+                            <li>Random Forest</li>
+                            <li>Decision Tree</li>
+                            <li>K-Nearest Neighbors</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>📖 How to Use</h3>
+                        <ul>
+                            <li>Fill in all 13 health parameters accurately</li>
+                            <li>Ensure values are within the specified ranges</li>
+                            <li>Click "Predict Risk" to get instant analysis</li>
+                            <li>Review the risk assessment and probability scores</li>
+                            <li>Use "Reset Form" to make another prediction</li>
+                        </ul>
+                    </div>
+
+                    <div class="disclaimer">
+                        <p><strong>⚠️ Important Disclaimer:</strong> This tool is for educational and informational purposes only. It should NOT be used as a substitute for professional medical advice, diagnosis, or treatment. Always consult with a qualified healthcare provider regarding any medical conditions or concerns.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

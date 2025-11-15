@@ -1,0 +1,7 @@
+,Train Accuracy,Test Accuracy,Precision,Recall,F1-Score,CV Mean,CV Std
+Logistic Regression,0.5868,0.623,0.6296,0.5667,0.5965,0.467,0.0342
+Support Vector Machine,0.8182,0.6066,0.625,0.5,0.5556,0.4423,0.0527
+Gradient Boosting,0.9876,0.5738,0.5833,0.4667,0.5185,0.4301,0.0628
+Random Forest,1.0,0.5574,0.5789,0.3667,0.449,0.4176,0.0358
+Decision Tree,1.0,0.5574,0.5714,0.4,0.4706,0.4632,0.0498
+K-Nearest Neighbors,0.6612,0.4426,0.4333,0.4333,0.4333,0.4426,0.0484
