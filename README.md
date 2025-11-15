@@ -52,7 +52,6 @@ Trained on the **UCI Heart Disease Dataset** (Cleveland database) with 303 patie
 - F1 Score: 59.65%
 
 ## ⚙️ Deployment
-- Static web app deployable on GitHub Pages, Netlify, or any static web host
 - Python module easy to integrate or extend with backend APIs
 
 ## 🤝 Contributing
