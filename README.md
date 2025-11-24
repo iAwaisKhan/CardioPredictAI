@@ -34,12 +34,6 @@ This project delivers a complete AI-powered heart disease risk prediction system
 4. View risk and confidence results
 5. Use **Reset Form** to try new data
 
-### Python API Usage
-
-<img width="1307" height="1014" alt="image" src="https://github.com/user-attachments/assets/d6ee67dd-e6cf-4141-b10c-14231b24d61f" />
-
-
-
 
 ## 📚 Dataset
 Trained on the **UCI Heart Disease Dataset** (Cleveland database) with 303 patient records, including 13 clinical features and balanced target classes.
@@ -50,6 +44,11 @@ Trained on the **UCI Heart Disease Dataset** (Cleveland database) with 303 patie
 - Precision: 62.96%
 - Recall: 56.67%
 - F1 Score: 59.65%
+
+## 👨‍💻 Author
+
+ - GitHub: iAwaisKhan
+ - Email: md.awaiskhan027@gmail.com
 
 ## ⚙️ Deployment
 - Python module easy to integrate or extend with backend APIs
