@@ -371,6 +371,85 @@
         </div>
     </div>
 
+    <!-- AI Health Chatbot -->
+    <div class="chatbot-container" id="chatbotContainer">
+        <div class="chatbot-header">
+            <div class="chatbot-title">
+                <span class="chatbot-avatar">🤖</span>
+                <div>
+                    <h3>Heart Health Assistant</h3>
+                    <p class="chatbot-status" id="chatbotStatus">Online</p>
+                </div>
+            </div>
+            <div class="chatbot-controls">
+                <button class="chatbot-minimize" id="minimizeChat">−</button>
+                <button class="chatbot-close" id="closeChat">×</button>
+            </div>
+        </div>
+        
+        <div class="chatbot-body" id="chatbotBody">
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-message bot-message">
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-content">
+                        <p>Hello! I'm your AI Heart Health Assistant. I can help you with:</p>
+                        <ul>
+                            <li>Heart disease prevention tips</li>
+                            <li>Understanding your risk factors</li>
+                            <li>Lifestyle and diet recommendations</li>
+                            <li>Exercise guidance</li>
+                            <li>Medication reminders</li>
+                            <li>Progress tracking and motivation</li>
+                        </ul>
+                        <p>How can I assist you today?</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="quick-replies" id="quickReplies">
+                <button class="quick-reply-btn" data-question="What are the main risk factors for heart disease?">
+                    Risk Factors
+                </button>
+                <button class="quick-reply-btn" data-question="How can I lower my cholesterol?">
+                    Lower Cholesterol
+                </button>
+                <button class="quick-reply-btn" data-question="What exercises are good for heart health?">
+                    Exercise Tips
+                </button>
+                <button class="quick-reply-btn" data-question="What should I eat for a healthy heart?">
+                    Heart-Healthy Diet
+                </button>
+            </div>
+        </div>
+        
+        <div class="chatbot-footer">
+            <div class="chat-input-wrapper">
+                <input 
+                    type="text" 
+                    id="chatInput" 
+                    class="chat-input" 
+                    placeholder="Ask me anything about heart health..."
+                    autocomplete="off"
+                >
+                <button class="chat-send-btn" id="sendMessageBtn">
+                    <span>➤</span>
+                </button>
+            </div>
+            <div class="chat-suggestions">
+                <span class="suggestion-tag" data-text="Tell me about my risk">My Risk</span>
+                <span class="suggestion-tag" data-text="Set a reminder">Reminders</span>
+                <span class="suggestion-tag" data-text="Track my progress">Progress</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot Toggle Button -->
+    <button class="chatbot-toggle" id="chatbotToggle">
+        <span class="chat-icon">💬</span>
+        <span class="notification-badge" id="chatNotification">1</span>
+    </button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
