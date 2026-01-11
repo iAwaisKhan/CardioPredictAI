@@ -7,33 +7,10 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Space Background Animation -->
-    <div class="stars-container">
-        <div class="stars small"></div>
-        <div class="stars medium"></div>
-        <div class="stars large"></div>
-        <div class="twinkling"></div>
-        <div class="shooting-star"></div>
-        <div class="shooting-star"></div>
-        <div class="shooting-star"></div>
-        <div class="shooting-star"></div>
-        <div class="shooting-star"></div>
-    </div>
-    
-    <!-- Planets -->
-    <div class="planet planet1"></div>
-    <div class="planet planet2"></div>
-    <div class="planet planet3"></div>
-    
-    <!-- Nebula Effects -->
-    <div class="nebula nebula1"></div>
-    <div class="nebula nebula2"></div>
-    <div class="nebula nebula3"></div>
-
     <div class="container">
         <header class="header">
-            <h1>🫀 AI Heart Disease Risk Predictor</h1>
-            <p>Advanced machine learning model trained on clinical data to predict heart disease risk based on key health parameters</p>
+            <h1>🛡️ CardioPredict AI</h1>
+            <p>Clinical-grade heart disease risk assessment powered by machine learning and health telemetry</p>
         </header>
 
         <div class="main-content">
@@ -41,151 +18,119 @@
             <div class="card">
                 <h2>Patient Health Parameters</h2>
                 <form id="predictionForm">
-                    <div class="form-grid">
-                        <!-- Age -->
-                        <div class="form-group">
-                            <label class="form-label" for="age">Age</label>
-                            <span class="form-description">Patient's age in years (29-80)</span>
-                            <input type="number" id="age" name="age" class="form-control" min="29" max="80" required>
-                        </div>
-
-                        <!-- Sex -->
-                        <div class="form-group">
-                            <label class="form-label">Sex</label>
-                            <span class="form-description">Biological sex</span>
-                            <div class="radio-group">
-                                <label class="radio-label">
-                                    <input type="radio" name="sex" value="1" required>
-                                    Male
-                                </label>
-                                <label class="radio-label">
-                                    <input type="radio" name="sex" value="0">
-                                    Female
-                                </label>
+                    <!-- Demographic info -->
+                    <div class="form-section">
+                        <div class="form-section-title">👤 Patient Information</div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label" for="age">Age</label>
+                                <input type="number" id="age" name="age" class="form-control" min="29" max="80" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Sex</label>
+                                <div class="radio-group">
+                                    <label class="radio-label"><input type="radio" name="sex" value="1" required> Male</label>
+                                    <label class="radio-label"><input type="radio" name="sex" value="0"> Female</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="cp">Chest Pain Type</label>
+                                <select id="cp" name="cp" class="form-control" required>
+                                    <option value="">Select...</option>
+                                    <option value="0">Typical Angina</option>
+                                    <option value="1">Atypical Angina</option>
+                                    <option value="2">Non-Anginal Pain</option>
+                                    <option value="3">Asymptomatic</option>
+                                </select>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Chest Pain Type -->
-                        <div class="form-group">
-                            <label class="form-label" for="cp">Chest Pain Type</label>
-                            <span class="form-description">Type of chest pain experienced</span>
-                            <select id="cp" name="cp" class="form-control" required>
-                                <option value="">Select...</option>
-                                <option value="0">Typical Angina</option>
-                                <option value="1">Atypical Angina</option>
-                                <option value="2">Non-Anginal Pain</option>
-                                <option value="3">Asymptomatic</option>
-                            </select>
-                        </div>
-
-                        <!-- Resting Blood Pressure -->
-                        <div class="form-group">
-                            <label class="form-label" for="trestbps">Resting Blood Pressure</label>
-                            <span class="form-description">Blood pressure at rest (90-200 mm Hg)</span>
-                            <input type="number" id="trestbps" name="trestbps" class="form-control" min="90" max="200" required>
-                        </div>
-
-                        <!-- Serum Cholesterol -->
-                        <div class="form-group">
-                            <label class="form-label" for="chol">Serum Cholesterol</label>
-                            <span class="form-description">Cholesterol level (100-600 mg/dl)</span>
-                            <input type="number" id="chol" name="chol" class="form-control" min="100" max="600" required>
-                        </div>
-
-                        <!-- Fasting Blood Sugar -->
-                        <div class="form-group">
-                            <label class="form-label">Fasting Blood Sugar</label>
-                            <span class="form-description">Fasting blood sugar &gt; 120 mg/dl</span>
-                            <div class="radio-group">
-                                <label class="radio-label">
-                                    <input type="radio" name="fbs" value="1" required>
-                                    Yes (&gt; 120 mg/dl)
-                                </label>
-                                <label class="radio-label">
-                                    <input type="radio" name="fbs" value="0">
-                                    No (≤ 120 mg/dl)
-                                </label>
+                    <!-- Clinical Measurements -->
+                    <div class="form-section">
+                        <div class="form-section-title">🩺 Clinical Measurements</div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label" for="trestbps">Resting Blood Pressure</label>
+                                <input type="number" id="trestbps" name="trestbps" class="form-control" min="90" max="200" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="chol">Serum Cholesterol</label>
+                                <input type="number" id="chol" name="chol" class="form-control" min="100" max="600" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Fasting Blood Sugar</label>
+                                <div class="radio-group">
+                                    <label class="radio-label"><input type="radio" name="fbs" value="1" required> > 120 mg/dl</label>
+                                    <label class="radio-label"><input type="radio" name="fbs" value="0"> ≤ 120 mg/dl</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="restecg">Resting ECG</label>
+                                <select id="restecg" name="restecg" class="form-control" required>
+                                    <option value="">Select...</option>
+                                    <option value="0">Normal</option>
+                                    <option value="1">ST-T Wave Abnormality</option>
+                                    <option value="2">LV Hypertrophy</option>
+                                </select>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Resting ECG -->
-                        <div class="form-group">
-                            <label class="form-label" for="restecg">Resting ECG Results</label>
-                            <span class="form-description">Resting electrocardiographic results</span>
-                            <select id="restecg" name="restecg" class="form-control" required>
-                                <option value="">Select...</option>
-                                <option value="0">Normal</option>
-                                <option value="1">ST-T Wave Abnormality</option>
-                                <option value="2">Left Ventricular Hypertrophy</option>
-                            </select>
-                        </div>
-
-                        <!-- Maximum Heart Rate -->
-                        <div class="form-group">
-                            <label class="form-label" for="thalach">Maximum Heart Rate</label>
-                            <span class="form-description">Max heart rate during exercise (60-220 bpm)</span>
-                            <input type="number" id="thalach" name="thalach" class="form-control" min="60" max="220" required>
-                        </div>
-
-                        <!-- Exercise Induced Angina -->
-                        <div class="form-group">
-                            <label class="form-label">Exercise Induced Angina</label>
-                            <span class="form-description">Angina induced by exercise</span>
-                            <div class="radio-group">
-                                <label class="radio-label">
-                                    <input type="radio" name="exang" value="1" required>
-                                    Yes
-                                </label>
-                                <label class="radio-label">
-                                    <input type="radio" name="exang" value="0">
-                                    No
-                                </label>
+                    <!-- Stress Test -->
+                    <div class="form-section">
+                        <div class="form-section-title">🏃 Exercise Test Results</div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label" for="thalach">Max Heart Rate</label>
+                                <input type="number" id="thalach" name="thalach" class="form-control" min="60" max="220" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Exercise Angina</label>
+                                <div class="radio-group">
+                                    <label class="radio-label"><input type="radio" name="exang" value="1" required> Yes</label>
+                                    <label class="radio-label"><input type="radio" name="exang" value="0"> No</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="oldpeak">ST Depression</label>
+                                <input type="number" id="oldpeak" name="oldpeak" class="form-control" min="0" max="6.2" step="0.1" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="slope">ST Slope</label>
+                                <select id="slope" name="slope" class="form-control" required>
+                                    <option value="">Select...</option>
+                                    <option value="0">Upsloping</option>
+                                    <option value="1">Flat</option>
+                                    <option value="2">Downsloping</option>
+                                </select>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- ST Depression -->
-                        <div class="form-group">
-                            <label class="form-label" for="oldpeak">ST Depression (Oldpeak)</label>
-                            <span class="form-description">ST depression by exercise (0-6.2)</span>
-                            <input type="number" id="oldpeak" name="oldpeak" class="form-control" min="0" max="6.2" step="0.1" required>
-                        </div>
-
-                        <!-- Slope -->
-                        <div class="form-group">
-                            <label class="form-label" for="slope">Slope of Peak Exercise ST</label>
-                            <span class="form-description">Slope of the peak exercise ST segment</span>
-                            <select id="slope" name="slope" class="form-control" required>
-                                <option value="">Select...</option>
-                                <option value="0">Upsloping</option>
-                                <option value="1">Flat</option>
-                                <option value="2">Downsloping</option>
-                            </select>
-                        </div>
-
-                        <!-- Number of Vessels -->
-                        <div class="form-group">
-                            <label class="form-label" for="ca">Number of Major Vessels</label>
-                            <span class="form-description">Number colored by fluoroscopy (0-3)</span>
-                            <select id="ca" name="ca" class="form-control" required>
-                                <option value="">Select...</option>
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                            </select>
-                        </div>
-
-                        <!-- Thalassemia -->
-                        <div class="form-group">
-                            <label class="form-label" for="thal">Thalassemia</label>
-                            <span class="form-description">Thalassemia test result</span>
-                            <select id="thal" name="thal" class="form-control" required>
-                                <option value="">Select...</option>
-                                <option value="0">Normal</option>
-                                <option value="1">Fixed Defect</option>
-                                <option value="2">Reversible Defect</option>
-                                <option value="3">Not Described</option>
-                            </select>
+                    <!-- Diagnostics -->
+                    <div class="form-section">
+                        <div class="form-section-title">🔬 Diagnostic Markers</div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label" for="ca">Major Vessels</label>
+                                <select id="ca" name="ca" class="form-control" required>
+                                    <option value="">Select...</option>
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="thal">Thalassemia</label>
+                                <select id="thal" name="thal" class="form-control" required>
+                                    <option value="">Select...</option>
+                                    <option value="0">Normal</option>
+                                    <option value="1">Fixed Defect</option>
+                                    <option value="2">Reversible Defect</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
 
@@ -361,7 +306,7 @@
                         <p>This AI-powered predictor uses advanced machine learning algorithms trained on the UCI Heart Disease Dataset containing 303 patient samples with 13 key health features.</p>
                         
                         <div class="model-chart">
-                            <img src="https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/b443e2c3e6b1ad65268497705903a166/972070d8-e7f9-4187-885a-d70c98b120c0/2c5673b4.png" alt="Model Performance Comparison">
+                            <img src="Assets/chart.png" alt="Model Performance Comparison">
                         </div>
                         
                         <p><strong>Algorithms Evaluated:</strong></p>

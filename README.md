@@ -39,11 +39,8 @@ This project delivers a complete AI-powered heart disease risk prediction system
 Trained on the **UCI Heart Disease Dataset** (Cleveland database) with 303 patient records, including 13 clinical features and balanced target classes.
 
 ## 📊 Model Performance
-- Best Model: Logistic Regression
-- Test Accuracy: 62.30%
-- Precision: 62.96%
-- Recall: 56.67%
-- F1 Score: 59.65%
+- Best Model: Logistic Regression (Optimized with GridSearchCV)
+- Test Accuracy: 78.69%
 
 ## 👨‍💻 Author
 

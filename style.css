@@ -213,6 +213,39 @@
     50% { box-shadow: 0 0 20px rgba(37, 99, 235, 0.8); }
 }
 
+/* Responsive Layout - Mobile Optimization */
+@media (max-width: 1024px) {
+    .main-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    .header h1 {
+        font-size: 2em;
+    }
+    
+    .card {
+        padding: 20px;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .radio-group {
+        flex-direction: column;
+    }
+    
+    .info-section {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* Base styles */
 html {
   font-size: var(--font-size-base);
@@ -226,269 +259,44 @@ html {
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+    background-color: #f0f4f8;
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.05) 0, transparent 50%),
+        radial-gradient(at 50% 0%, rgba(16, 185, 129, 0.05) 0, transparent 50%);
     min-height: 100vh;
     padding: 20px;
     line-height: 1.6;
-    color: #333;
+    color: #1f2937;
     overflow-x: hidden;
     position: relative;
 }
 
-/* Animated Stars Background */
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    z-index: 0;
-    pointer-events: none;
+/* Grouped Form Styles */
+.form-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #f8fafc;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
 }
 
-/* Stars Animation Layers */
-.stars-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: 0;
-    pointer-events: none;
+.form-section-title {
+    font-size: 1.1em;
+    font-weight: 700;
+    color: #475569;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.stars {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    transform: rotate(0deg);
+.form-section-title i {
+    color: var(--primary-color);
 }
 
-/* Small Stars */
-.stars.small {
-    background-image: 
-        radial-gradient(2px 2px at 20px 30px, #eee, transparent),
-        radial-gradient(2px 2px at 60px 70px, #fff, transparent),
-        radial-gradient(1px 1px at 50px 50px, #ddd, transparent),
-        radial-gradient(1px 1px at 130px 80px, #fff, transparent),
-        radial-gradient(2px 2px at 90px 10px, #eee, transparent);
-    background-repeat: repeat;
-    background-size: 200px 200px;
-    animation: stars-move 50s linear infinite;
-    opacity: 0.5;
-}
-
-/* Medium Stars */
-.stars.medium {
-    background-image: 
-        radial-gradient(3px 3px at 100px 120px, #fff, transparent),
-        radial-gradient(2px 2px at 160px 80px, #eee, transparent),
-        radial-gradient(3px 3px at 50px 160px, #ddd, transparent),
-        radial-gradient(2px 2px at 140px 40px, #fff, transparent);
-    background-repeat: repeat;
-    background-size: 300px 300px;
-    animation: stars-move 100s linear infinite;
-    opacity: 0.3;
-}
-
-/* Large Stars */
-.stars.large {
-    background-image: 
-        radial-gradient(4px 4px at 180px 220px, #fff, transparent),
-        radial-gradient(3px 3px at 240px 140px, #eee, transparent),
-        radial-gradient(4px 4px at 120px 280px, #ddd, transparent);
-    background-repeat: repeat;
-    background-size: 400px 400px;
-    animation: stars-move 150s linear infinite;
-    opacity: 0.2;
-}
-
-@keyframes stars-move {
-    from { transform: translateY(0px); }
-    to { transform: translateY(-2000px); }
-}
-
-/* Twinkling Stars */
-.twinkling {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: transparent url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj4KICA8Y2lyY2xlIGN4PSIyMCIgY3k9IjMwIiByPSIyIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC44Ii8+CiAgPGNpcmNsZSBjeD0iNjAiIGN5PSI3MCIgcj0iMSIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuNiIvPgogIDxjaXJjbGUgY3g9IjkwIiBjeT0iMTAiIHI9IjEuNSIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuNyIvPgogIDxjaXJjbGUgY3g9IjEzMCIgY3k9IjgwIiByPSIxIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC41Ii8+CiAgPGNpcmNsZSBjeD0iMTYwIiBjeT0iNDAiIHI9IjIiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjgiLz4KPC9zdmc+') repeat;
-    animation: twinkling 200s linear infinite;
-    opacity: 0.4;
-}
-
-@keyframes twinkling {
-    from { background-position: 0 0; }
-    to { background-position: -10000px 5000px; }
-}
-
-/* Shooting Stars */
-.shooting-star {
-    position: absolute;
-    height: 2px;
-    background: linear-gradient(90deg, #fff, transparent);
-    animation: shooting 3s linear infinite;
-    opacity: 0;
-}
-
-.shooting-star:nth-child(1) {
-    top: 10%;
-    left: 20%;
-    width: 100px;
-    animation-delay: 0s;
-}
-
-.shooting-star:nth-child(2) {
-    top: 30%;
-    left: 60%;
-    width: 80px;
-    animation-delay: 2s;
-}
-
-.shooting-star:nth-child(3) {
-    top: 50%;
-    left: 10%;
-    width: 120px;
-    animation-delay: 4s;
-}
-
-.shooting-star:nth-child(4) {
-    top: 70%;
-    left: 70%;
-    width: 90px;
-    animation-delay: 6s;
-}
-
-.shooting-star:nth-child(5) {
-    top: 20%;
-    left: 80%;
-    width: 110px;
-    animation-delay: 8s;
-}
-
-@keyframes shooting {
-    0% {
-        opacity: 0;
-        transform: translateX(0) translateY(0);
-    }
-    10% {
-        opacity: 1;
-    }
-    90% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-        transform: translateX(-300px) translateY(300px);
-    }
-}
-
-/* Planets/Celestial Bodies */
-.planet {
-    position: absolute;
-    border-radius: 50%;
-    opacity: 0.6;
-    animation: float 20s ease-in-out infinite;
-}
-
-.planet.planet1 {
-    width: 80px;
-    height: 80px;
-    background: radial-gradient(circle at 30% 30%, #ff6b6b, #c92a2a);
-    top: 15%;
-    right: 10%;
-    animation-duration: 25s;
-    box-shadow: 0 0 40px rgba(255, 107, 107, 0.4);
-}
-
-.planet.planet2 {
-    width: 60px;
-    height: 60px;
-    background: radial-gradient(circle at 30% 30%, #4dabf7, #1c7ed6);
-    bottom: 20%;
-    left: 8%;
-    animation-duration: 30s;
-    animation-delay: 5s;
-    box-shadow: 0 0 30px rgba(77, 171, 247, 0.4);
-}
-
-.planet.planet3 {
-    width: 100px;
-    height: 100px;
-    background: radial-gradient(circle at 30% 30%, #a78bfa, #7c3aed);
-    top: 60%;
-    right: 15%;
-    animation-duration: 35s;
-    animation-delay: 10s;
-    box-shadow: 0 0 50px rgba(167, 139, 250, 0.3);
-}
-
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0px) translateX(0px) rotate(0deg);
-    }
-    25% {
-        transform: translateY(-20px) translateX(10px) rotate(5deg);
-    }
-    50% {
-        transform: translateY(-40px) translateX(-10px) rotate(-5deg);
-    }
-    75% {
-        transform: translateY(-20px) translateX(10px) rotate(5deg);
-    }
-}
-
-/* Nebula Effect */
-.nebula {
-    position: fixed;
-    width: 500px;
-    height: 500px;
-    border-radius: 50%;
-    filter: blur(100px);
-    opacity: 0.15;
-    pointer-events: none;
-    animation: nebula-move 40s ease-in-out infinite;
-}
-
-.nebula.nebula1 {
-    background: radial-gradient(circle, #667eea 0%, transparent 70%);
-    top: -100px;
-    left: -100px;
-}
-
-.nebula.nebula2 {
-    background: radial-gradient(circle, #764ba2 0%, transparent 70%);
-    bottom: -100px;
-    right: -100px;
-    animation-delay: 10s;
-}
-
-.nebula.nebula3 {
-    background: radial-gradient(circle, #f093fb 0%, transparent 70%);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation-delay: 20s;
-}
-
-@keyframes nebula-move {
-    0%, 100% {
-        transform: scale(1) translate(0, 0);
-    }
-    33% {
-        transform: scale(1.1) translate(50px, -50px);
-    }
-    66% {
-        transform: scale(0.9) translate(-50px, 50px);
-    }
+/* Animated Background removed for clinical look */
+.stars-container, .planet, .nebula, .twinkling, .shooting-star {
+    display: none !important;
 }
 
 /* Ensure container is above background */
@@ -503,7 +311,7 @@ body::before {
 /* Header Styles */
 .header {
     text-align: center;
-    color: white;
+    color: var(--color-text);
     margin-bottom: 40px;
     animation: fadeInUp 0.6s ease-out;
 }
@@ -511,13 +319,14 @@ body::before {
 .header h1 {
     font-size: 3em;
     margin-bottom: 10px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    color: var(--primary-color);
+    text-shadow: none;
     animation: pulse 2s ease-in-out infinite;
 }
 
 .header p {
     font-size: 1.2em;
-    opacity: 0.95;
+    color: var(--color-text-secondary);
     max-width: 800px;
     margin: 0 auto;
 }

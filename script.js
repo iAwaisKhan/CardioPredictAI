@@ -113,51 +113,68 @@ predictionForm.addEventListener('submit', async function(e) {
     }, 1500);
 });
 
-// Prediction algorithm (simplified logistic regression simulation)
+// Optimized Prediction Model (Weights from Python Training)
+const modelParams = {
+    weights: {
+        age: -0.072478,
+        sex: -0.155812,
+        cp: 0.272284,
+        trestbps: -0.057148,
+        chol: -0.078399,
+        fbs: -0.010103,
+        restecg: 0.069241,
+        thalach: 0.187271,
+        exang: -0.217101,
+        oldpeak: -0.209106,
+        slope: 0.168685,
+        ca: -0.184061,
+        thal: -0.207127
+    },
+    intercept: 0.065229,
+    scaling: {
+        age: { mean: 54.2893, std: 9.1344 },
+        sex: { mean: 0.6818, std: 0.4658 },
+        cp: { mean: 0.9421, std: 1.0066 },
+        trestbps: { mean: 131.7066, std: 17.9573 },
+        chol: { mean: 244.8843, std: 47.7484 },
+        fbs: { mean: 0.1405, std: 0.3475 },
+        restecg: { mean: 0.5455, std: 0.5301 },
+        thalach: { mean: 150.1240, std: 21.9325 },
+        exang: { mean: 0.3388, std: 0.4733 },
+        oldpeak: { mean: 1.0719, std: 1.2038 },
+        slope: { mean: 1.4132, std: 0.6188 },
+        ca: { mean: 0.7438, std: 1.0407 },
+        thal: { mean: 2.3388, std: 0.6038 }
+    }
+};
+
+// Prediction algorithm (Calibrated with Python model)
 function predictHeartDisease(data) {
-    // Feature weights based on logistic regression analysis
-    const weights = {
-        age: 0.02,
-        sex: 0.8,
-        cp: 0.5,
-        trestbps: 0.01,
-        chol: 0.005,
-        fbs: 0.1,
-        restecg: 0.3,
-        thalach: -0.015,
-        exang: 0.7,
-        oldpeak: 0.4,
-        slope: 0.6,
-        ca: 0.9,
-        thal: 0.7
-    };
+    let score = modelParams.intercept;
     
-    // Calculate weighted score
-    let score = 0;
-    score += (data.age - 50) * weights.age;
-    score += data.sex * weights.sex;
-    score += data.cp * weights.cp;
-    score += (data.trestbps - 130) * weights.trestbps;
-    score += (data.chol - 250) * weights.chol;
-    score += data.fbs * weights.fbs;
-    score += data.restecg * weights.restecg;
-    score += (180 - data.thalach) * weights.thalach;
-    score += data.exang * weights.exang;
-    score += data.oldpeak * weights.oldpeak;
-    score += data.slope * weights.slope;
-    score += data.ca * weights.ca;
-    score += data.thal * weights.thal;
+    // Process each feature
+    for (const [feature, value] of Object.entries(data)) {
+        let processedValue = value;
+        
+        // Standardize continuous variables to match Python's StandardScaler
+        if (modelParams.scaling[feature]) {
+            const { mean, std } = modelParams.scaling[feature];
+            processedValue = (value - mean) / std;
+        }
+        
+        // Apply weight
+        if (modelParams.weights[feature]) {
+            score += processedValue * modelParams.weights[feature];
+        }
+    }
     
     // Convert to probability using sigmoid function
     const probability = 1 / (1 + Math.exp(-score));
     
-    // Add some randomness for demonstration (±5%)
-    const adjustedProb = Math.max(0.05, Math.min(0.95, probability + (Math.random() - 0.5) * 0.1));
-    
     return {
-        diseaseProb: adjustedProb,
-        noDiseaseProb: 1 - adjustedProb,
-        hasDisease: adjustedProb > 0.5
+        diseaseProb: probability,
+        noDiseaseProb: 1 - probability,
+        hasDisease: probability > 0.5
     };
 }
 
@@ -165,8 +182,15 @@ function predictHeartDisease(data) {
 function displayResults(prediction) {
     hideLoading();
     
-    const diseaseProb = Math.round(prediction.diseaseProb * 100);
-    const noDiseaseProb = Math.round(prediction.noDiseaseProb * 100);
+    // Store globally for chatbot access
+    currentPredictionData = {
+        diseaseProb: Math.round(prediction.diseaseProb * 100),
+        noDiseaseProb: Math.round(prediction.noDiseaseProb * 100),
+        hasDisease: prediction.hasDisease
+    };
+    
+    const diseaseProb = currentPredictionData.diseaseProb;
+    const noDiseaseProb = currentPredictionData.noDiseaseProb;
     
     // Update result box
     resultBox.className = 'result-box';
@@ -383,6 +407,7 @@ const suggestionTags = document.querySelectorAll('.suggestion-tag');
 const chatNotification = document.getElementById('chatNotification');
 
 // Chatbot state
+let currentPredictionData = null;
 let chatHistory = [];
 let userProgress = {
     goalsSet: false,
@@ -890,94 +915,7 @@ document.querySelectorAll('.info-card, .disclaimer').forEach(card => {
     observer.observe(card);
 });
 
-// Space Animation Enhancement
-function initSpaceAnimation() {
-    // Create additional dynamic stars
-    createDynamicStars(50);
-    
-    // Add parallax effect on mouse move
-    addParallaxEffect();
-    
-    // Add constellation lines (optional)
-    // createConstellations();
-}
-
-// Create random twinkling stars
-function createDynamicStars(count) {
-    const starsContainer = document.querySelector('.stars-container');
-    
-    for (let i = 0; i < count; i++) {
-        const star = document.createElement('div');
-        star.className = 'dynamic-star';
-        star.style.cssText = `
-            position: absolute;
-            width: ${Math.random() * 3 + 1}px;
-            height: ${Math.random() * 3 + 1}px;
-            background: white;
-            border-radius: 50%;
-            top: ${Math.random() * 100}%;
-            left: ${Math.random() * 100}%;
-            opacity: ${Math.random() * 0.7 + 0.3};
-            animation: twinkle ${Math.random() * 3 + 2}s ease-in-out infinite;
-            animation-delay: ${Math.random() * 3}s;
-            box-shadow: 0 0 ${Math.random() * 10 + 5}px rgba(255, 255, 255, 0.5);
-        `;
-        starsContainer.appendChild(star);
-    }
-    
-    // Add twinkle animation
-    if (!document.getElementById('twinkle-animation')) {
-        const style = document.createElement('style');
-        style.id = 'twinkle-animation';
-        style.textContent = `
-            @keyframes twinkle {
-                0%, 100% { opacity: 0.3; transform: scale(1); }
-                50% { opacity: 1; transform: scale(1.2); }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-}
-
-// Add parallax effect based on mouse movement
-function addParallaxEffect() {
-    let mouseX = 0;
-    let mouseY = 0;
-    let targetX = 0;
-    let targetY = 0;
-    
-    document.addEventListener('mousemove', (e) => {
-        mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-        mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-    });
-    
-    function animate() {
-        targetX += (mouseX - targetX) * 0.05;
-        targetY += (mouseY - targetY) * 0.05;
-        
-        const stars = document.querySelectorAll('.stars');
-        stars.forEach((star, index) => {
-            const speed = (index + 1) * 10;
-            star.style.transform = `translate(${targetX * speed}px, ${targetY * speed}px)`;
-        });
-        
-        const planets = document.querySelectorAll('.planet');
-        planets.forEach((planet, index) => {
-            const speed = (index + 1) * 5;
-            const currentTransform = planet.style.transform || '';
-            planet.style.transform = `${currentTransform} translate(${targetX * speed}px, ${targetY * speed}px)`;
-        });
-        
-        requestAnimationFrame(animate);
-    }
-    
-    animate();
-}
-
-// Initialize space animation when DOM is loaded
+// Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    initSpaceAnimation();
-    console.log('Space animation initialized! 🌌');
+    console.log('CardioPredict AI initialized successfully! ❤️');
 });
-
-console.log('Heart Disease Predictor initialized successfully! ❤️');

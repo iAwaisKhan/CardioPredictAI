@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import pickle
-from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
@@ -59,31 +59,51 @@ class HeartDiseasePredictionSystem:
         return X_train_scaled, X_test_scaled, y_train, y_test
 
     def train_models(self, X_train, y_train, X_test, y_test):
-        """Train multiple ML models"""
+        """Train multiple ML models with Hyperparameter Tuning"""
         print("\n" + "="*70)
-        print("TRAINING MACHINE LEARNING MODELS")
+        print("TRAINING MACHINE LEARNING MODELS WITH CROSS-VALIDATION")
         print("="*70)
 
-        # Initialize models
-        model_dict = {
-            'Logistic Regression': LogisticRegression(random_state=42, max_iter=1000),
-            'Random Forest': RandomForestClassifier(n_estimators=100, random_state=42),
-            'Support Vector Machine': SVC(kernel='rbf', random_state=42, probability=True),
-            'K-Nearest Neighbors': KNeighborsClassifier(n_neighbors=5),
-            'Decision Tree': DecisionTreeClassifier(random_state=42),
-            'Gradient Boosting': GradientBoostingClassifier(n_estimators=100, random_state=42)
+        # Initialize models and their parameter grids for GridSearchCV
+        model_params = {
+            'Logistic Regression': {
+                'model': LogisticRegression(random_state=42, max_iter=2000),
+                'params': {
+                    'C': [0.01, 0.1, 1, 10, 100],
+                    'penalty': ['l2'],
+                    'solver': ['liblinear', 'lbfgs']
+                }
+            },
+            'Random Forest': {
+                'model': RandomForestClassifier(random_state=42),
+                'params': {
+                    'n_estimators': [50, 100, 200],
+                    'max_depth': [None, 5, 10, 15],
+                    'min_samples_split': [2, 5, 10]
+                }
+            },
+            'Support Vector Machine': {
+                'model': SVC(probability=True, random_state=42),
+                'params': {
+                    'C': [0.1, 1, 10],
+                    'kernel': ['rbf', 'linear']
+                }
+            }
         }
 
         results = {}
 
-        for model_name, model in model_dict.items():
-            print(f"\nTraining {model_name}...")
-
-            # Train
-            model.fit(X_train, y_train)
+        for model_name, config in model_params.items():
+            print(f"\nOptimizing {model_name}...")
+            
+            # Use GridSearchCV for hyperparameter tuning
+            clf = GridSearchCV(config['model'], config['params'], cv=5, scoring='accuracy', n_jobs=-1)
+            clf.fit(X_train, y_train)
+            
+            best_model = clf.best_estimator_
 
             # Predictions
-            y_pred_test = model.predict(X_test)
+            y_pred_test = best_model.predict(X_test)
 
             # Metrics
             test_accuracy = accuracy_score(y_test, y_pred_test)
@@ -91,32 +111,25 @@ class HeartDiseasePredictionSystem:
             recall = recall_score(y_test, y_pred_test)
             f1 = f1_score(y_test, y_pred_test)
 
-            # Cross-validation
-            cv_scores = cross_val_score(model, X_train, y_train, cv=5, scoring='accuracy')
-
             results[model_name] = {
                 'accuracy': test_accuracy,
                 'precision': precision,
                 'recall': recall,
                 'f1_score': f1,
-                'cv_mean': cv_scores.mean()
+                'best_params': clf.best_params_
             }
 
-            self.models[model_name] = model
-
+            self.models[model_name] = best_model
+            print(f"  Best Params: {clf.best_params_}")
             print(f"  Test Accuracy: {test_accuracy:.4f}")
-            print(f"  Precision: {precision:.4f}")
-            print(f"  Recall: {recall:.4f}")
-            print(f"  F1-Score: {f1:.4f}")
 
-        # Select best model
-        best_model_name = max(results, key=lambda x: results[x]['accuracy'])
-        self.best_model_name = best_model_name
-        self.best_model = self.models[best_model_name]
+        # Choose best model overall
+        self.best_model_name = max(results, key=lambda x: results[x]['accuracy'])
+        self.best_model = self.models[self.best_model_name]
 
         print("\n" + "="*70)
-        print(f"BEST MODEL: {best_model_name}")
-        print(f"Accuracy: {results[best_model_name]['accuracy']:.4f}")
+        print(f"BEST PERFORMING MODEL: {self.best_model_name}")
+        print(f"Final Accuracy: {results[self.best_model_name]['accuracy']:.4f}")
         print("="*70)
 
         return results
@@ -169,6 +182,44 @@ class HeartDiseasePredictionSystem:
 
         return prediction, probability
 
+    def export_to_javascript(self):
+        """Export best model parameters to a JavaScript readable format"""
+        if self.best_model_name != 'Logistic Regression':
+            print(f"\nNote: Simplified coefficients only available for Logistic Regression.")
+            print(f"Current best model is {self.best_model_name}.")
+            # Fallback to Logistic Regression for JS export if it exists
+            if 'Logistic Regression' in self.models:
+                model = self.models['Logistic Regression']
+            else:
+                return
+        else:
+            model = self.best_model
+
+        coef = model.coef_[0]
+        intercept = model.intercept_[0]
+        
+        # Get scaling parameters
+        means = self.scaler.mean_
+        stds = np.sqrt(self.scaler.var_)
+        
+        js_code = f"""
+// Improved Model Weights (Optimized via GridSearchCV in Python)
+const modelParams = {{
+    weights: {{
+        {",\n        ".join([f"{name}: {val:.6f}" for name, val in zip(self.feature_names, coef)])}
+    }},
+    intercept: {intercept:.6f},
+    scaling: {{
+        {",\n        ".join([f"{name}: {{ mean: {m:.4f}, std: {s:.4f} }}" for name, m, s in zip(self.feature_names, means, stds)])}
+    }}
+}};
+"""
+        print("\n" + "="*70)
+        print("COPY THIS TO script.js")
+        print("="*70)
+        print(js_code)
+        print("="*70)
+
     def get_prediction_report(self, patient_data):
         """Get detailed prediction report"""
         prediction, probability = self.predict(patient_data)
@@ -197,10 +248,13 @@ def main():
     print("="*70)
 
     # Example: Load dataset and train
-    # df = system.load_data('heart_disease_dataset.csv')
-    # X_train, X_test, y_train, y_test = system.preprocess_data(df)
-    # results = system.train_models(X_train, y_train, X_test, y_test)
-    # system.save_model()
+    df = system.load_data('Assets/heart_disease_dataset.csv')
+    X_train, X_test, y_train, y_test = system.preprocess_data(df)
+    results = system.train_models(X_train, y_train, X_test, y_test)
+    system.save_model()
+    
+    # Export for JavaScript
+    system.export_to_javascript()
 
     # Example: Make prediction for a new patient
     # Load the model first
