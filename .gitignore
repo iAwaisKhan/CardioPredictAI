@@ -338,6 +338,7 @@ videos/
 
 # Custom ignore patterns
 # Add any project-specific patterns below
+.vite/
 
 # Node
 node_modules/

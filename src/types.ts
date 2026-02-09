@@ -18,6 +18,13 @@ export interface PredictionResult {
     diseaseProb: number;
     noDiseaseProb: number;
     hasDisease: boolean;
+    riskLevel: string;
+}
+
+export interface StoredPrediction extends PredictionResult {
+    id: string;
+    timestamp: number;
+    patientData: PatientData;
 }
 
 export interface Tip {

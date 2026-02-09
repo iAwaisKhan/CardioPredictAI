@@ -21,7 +21,8 @@ export async function predictHeartDisease(data: PatientData): Promise<Prediction
         return {
             diseaseProb: Math.round(result.disease_probability),
             noDiseaseProb: Math.round(result.no_disease_probability),
-            hasDisease: result.prediction === 1
+            hasDisease: result.prediction === 1,
+            riskLevel: result.risk_level
         };
     } catch (error) {
         console.error("Prediction failed, falling back to local heuristic (demo mode):", error);
@@ -34,7 +35,7 @@ export async function predictHeartDisease(data: PatientData): Promise<Prediction
 function localHeuristicPredict(data: PatientData): PredictionResult {
     // Determine risk based on simple counters
     let riskFactors = 0;
-    
+
     if (data.age > 50) riskFactors++;
     if (data.sex === 1) riskFactors++;
     if (data.cp > 0) riskFactors += 2;
@@ -44,12 +45,19 @@ function localHeuristicPredict(data: PatientData): PredictionResult {
     if (data.thalach < 150) riskFactors++;
     if (data.exang === 1) riskFactors++;
     if (data.oldpeak > 1.0) riskFactors++;
-    
+
     const probability = Math.min(0.95, riskFactors / 12);
-    
+    const diseaseProb = Math.round(probability * 100);
+
+    let riskLevel = "Low";
+    if (diseaseProb >= 75) riskLevel = "Very High";
+    else if (diseaseProb >= 50) riskLevel = "High";
+    else if (diseaseProb >= 25) riskLevel = "Moderate";
+
     return {
-        diseaseProb: Math.round(probability * 100),
+        diseaseProb,
         noDiseaseProb: Math.round((1 - probability) * 100),
-        hasDisease: probability > 0.5
+        hasDisease: probability > 0.5,
+        riskLevel
     };
 }
