@@ -1,3 +1,4 @@
+documentation
 # CardioPredictAI 🩺
 
 An AI-powered web application designed to predict cardiovascular disease risk using Machine Learning. This project features a modern React frontend and a high-performance FastAPI backend.
@@ -31,3 +32,19 @@ To run this project locally, follow these steps for both the backend and fronten
 1. Navigate to the backend directory:
    ```bash
    cd backend
+
+# CardioPredictAI
+
+## Project Overview
+This repository contains the source code for CardioPredictAI, a web application for predicting cardiovascular health.
+
+## Branches
+- `main`: Contains the full application source code (Frontend + Backend).
+- `documentation`: Contains project documentation.
+
+## Getting Started
+To view the code, switch to the `main` branch:
+```bash
+git checkout main
+```
+documentation
