@@ -25,9 +25,12 @@ export async function predictHeartDisease(data: PatientData): Promise<Prediction
             riskLevel: result.risk_level
         };
     } catch (error) {
-        console.error("Prediction failed, falling back to local heuristic (demo mode):", error);
-        alert("Backend API not reachable. Using offline demo mode.");
-        return localHeuristicPredict(data);
+        console.warn('Backend API not reachable. Falling back to offline demo mode.', error);
+        // Throw a special offline error so the caller can show a non-blocking notification
+        const result = localHeuristicPredict(data);
+        // Tag result so the UI can show an offline banner
+        (result as PredictionResult & { isOffline?: boolean }).isOffline = true;
+        return result;
     }
 }
 
