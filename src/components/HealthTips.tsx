@@ -1,4 +1,3 @@
-import React from 'react';
 import { Tip } from '../types';
 
 interface HealthTipsProps {
@@ -32,22 +31,27 @@ const HealthTips: React.FC<HealthTipsProps> = ({ riskPercentage }) => {
 
   return (
     <div className="card">
-      <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+      <h3 className="text-xs uppercase tracking-widest font-mono text-muted mb-6 flex items-center gap-2">
         <span>💡</span> Personalized Recommendations
       </h3>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {tips.map((tip, idx) => (
-          <div 
-            key={idx} 
-            className={`p-4 rounded-xl border-2 transition-all hover:shadow-md ${
-              tip.priority === 'urgent' ? 'border-red-100 bg-red-50 text-red-900' : 
-              tip.priority === 'high' ? 'border-orange-100 bg-orange-50 text-orange-900' : 
-              'border-emerald-100 bg-emerald-50 text-emerald-900'
+          <div
+            key={idx}
+            className={`p-4 rounded-sm border transition-all duration-200 hover:scale-[1.02] ${
+              tip.priority === 'urgent'
+                ? 'border-primary/30 bg-primary/10'
+                : tip.priority === 'high'
+                ? 'border-yellow-500/30 bg-yellow-500/10'
+                : 'border-emerald-500/30 bg-emerald-500/10'
             }`}
           >
-            <div className="text-3xl mb-2">{tip.icon}</div>
-            <h4 className="font-bold mb-1">{tip.title}</h4>
-            <p className="text-sm opacity-80">{tip.text}</p>
+            <div className="text-2xl mb-3">{tip.icon}</div>
+            <h4 className={`font-mono text-[10px] uppercase tracking-widest mb-2 ${
+              tip.priority === 'urgent' ? 'text-primary' :
+              tip.priority === 'high' ? 'text-yellow-400' : 'text-emerald-400'
+            }`}>{tip.title}</h4>
+            <p className="text-xs text-muted leading-relaxed font-mono">{tip.text}</p>
           </div>
         ))}
       </div>
@@ -56,3 +60,4 @@ const HealthTips: React.FC<HealthTipsProps> = ({ riskPercentage }) => {
 };
 
 export default HealthTips;
+
