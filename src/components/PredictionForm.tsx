@@ -42,23 +42,26 @@ const PredictionForm: React.FC<PredictionFormProps> = ({ onSubmit, isLoading }) 
 
   return (
     <div className="card">
-      <h2 className="text-xl font-bold mb-6">Patient Health Parameters</h2>
-      <form onSubmit={handleSubmit} className="space-y-8">
+      <h2 className="font-serif text-3xl md:text-4xl mb-8 tracking-tight">Patient Health Parameters</h2>
+      <form onSubmit={handleSubmit} className="space-y-10">
         {/* Patient Info */}
         <section>
-          <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 mb-4 flex items-center gap-2">
-            <span>👤</span> Patient Information
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="flex items-center gap-3 mb-6">
+            <span className="w-6 h-[1px] bg-primary"></span>
+            <h3 className="text-[11px] uppercase tracking-[0.12em] text-muted font-mono flex items-center gap-2">
+              Patient Information
+            </h3>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
               <label className="form-label" htmlFor="age">Age</label>
               <input type="number" id="age" name="age" className="form-control" min="29" max="80" value={formData.age} onChange={handleChange} required />
             </div>
             <div>
               <label className="form-label">Sex</label>
-              <div className="flex bg-slate-100 p-1 rounded-lg gap-1">
-                <button type="button" onClick={() => handleRadioChange('sex', 1)} className={`flex-1 py-2 rounded-md transition-all ${formData.sex === 1 ? 'bg-white shadow text-primary font-bold' : 'text-slate-500'}`}>Male</button>
-                <button type="button" onClick={() => handleRadioChange('sex', 0)} className={`flex-1 py-2 rounded-md transition-all ${formData.sex === 0 ? 'bg-white shadow text-primary font-bold' : 'text-slate-500'}`}>Female</button>
+              <div className="flex bg-background border border-divider p-1 rounded-sm gap-1">
+                <button type="button" onClick={() => handleRadioChange('sex', 1)} className={`flex-1 py-2 rounded-sm transition-all text-xs uppercase tracking-widest font-mono ${formData.sex === 1 ? 'bg-surface text-primary border border-primary/20' : 'text-muted hover:text-text'}`}>Male</button>
+                <button type="button" onClick={() => handleRadioChange('sex', 0)} className={`flex-1 py-2 rounded-sm transition-all text-xs uppercase tracking-widest font-mono ${formData.sex === 0 ? 'bg-surface text-primary border border-primary/20' : 'text-muted hover:text-text'}`}>Female</button>
               </div>
             </div>
             <div>
@@ -75,10 +78,13 @@ const PredictionForm: React.FC<PredictionFormProps> = ({ onSubmit, isLoading }) 
 
         {/* Clinical Measurements */}
         <section>
-          <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 mb-4 flex items-center gap-2">
-            <span>🩺</span> Clinical Measurements
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="flex items-center gap-3 mb-6">
+            <span className="w-6 h-[1px] bg-primary"></span>
+            <h3 className="text-[11px] uppercase tracking-[0.12em] text-muted font-mono flex items-center gap-2">
+              Clinical Measurements
+            </h3>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="form-label" htmlFor="trestbps">Resting Blood Pressure</label>
               <input type="number" id="trestbps" name="trestbps" className="form-control" min="90" max="200" value={formData.trestbps} onChange={handleChange} required />
@@ -90,14 +96,12 @@ const PredictionForm: React.FC<PredictionFormProps> = ({ onSubmit, isLoading }) 
           </div>
         </section>
 
-        {/* More fields... I'll truncate for brevity in the component but include all in the final file */}
-        {/* I'll add the rest of the fields now */}
         <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
            <div>
               <label className="form-label">Fasting Blood Sugar</label>
-              <div className="flex bg-slate-100 p-1 rounded-lg gap-1">
-                <button type="button" onClick={() => handleRadioChange('fbs', 1)} className={`flex-1 py-2 rounded-md transition-all ${formData.fbs === 1 ? 'bg-white shadow text-primary font-bold' : 'text-slate-500'}`}>{'>'} 120</button>
-                <button type="button" onClick={() => handleRadioChange('fbs', 0)} className={`flex-1 py-2 rounded-md transition-all ${formData.fbs === 0 ? 'bg-white shadow text-primary font-bold' : 'text-slate-500'}`}>≤ 120</button>
+              <div className="flex bg-background border border-divider p-1 rounded-sm gap-1">
+                <button type="button" onClick={() => handleRadioChange('fbs', 1)} className={`flex-1 py-2 rounded-sm transition-all text-xs uppercase tracking-widest font-mono ${formData.fbs === 1 ? 'bg-surface text-primary border border-primary/20' : 'text-muted hover:text-text'}`}>{'>'} 120</button>
+                <button type="button" onClick={() => handleRadioChange('fbs', 0)} className={`flex-1 py-2 rounded-sm transition-all text-xs uppercase tracking-widest font-mono ${formData.fbs === 0 ? 'bg-surface text-primary border border-primary/20' : 'text-muted hover:text-text'}`}>≤ 120</button>
               </div>
             </div>
             <div>
@@ -110,16 +114,16 @@ const PredictionForm: React.FC<PredictionFormProps> = ({ onSubmit, isLoading }) 
             </div>
         </section>
 
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
                 <label className="form-label" htmlFor="thalach">Max Heart Rate</label>
                 <input type="number" id="thalach" name="thalach" className="form-control" value={formData.thalach} onChange={handleChange} required />
             </div>
             <div>
                 <label className="form-label">Exercise Angina</label>
-                <div className="flex bg-slate-100 p-1 rounded-lg gap-1">
-                  <button type="button" onClick={() => handleRadioChange('exang', 1)} className={`flex-1 py-2 rounded-md transition-all ${formData.exang === 1 ? 'bg-white shadow text-primary font-bold' : 'text-slate-500'}`}>Yes</button>
-                  <button type="button" onClick={() => handleRadioChange('exang', 0)} className={`flex-1 py-2 rounded-md transition-all ${formData.exang === 0 ? 'bg-white shadow text-primary font-bold' : 'text-slate-500'}`}>No</button>
+                <div className="flex bg-background border border-divider p-1 rounded-sm gap-1">
+                  <button type="button" onClick={() => handleRadioChange('exang', 1)} className={`flex-1 py-2 rounded-sm transition-all text-xs uppercase tracking-widest font-mono ${formData.exang === 1 ? 'bg-surface text-primary border border-primary/20' : 'text-muted hover:text-text'}`}>Yes</button>
+                  <button type="button" onClick={() => handleRadioChange('exang', 0)} className={`flex-1 py-2 rounded-sm transition-all text-xs uppercase tracking-widest font-mono ${formData.exang === 0 ? 'bg-surface text-primary border border-primary/20' : 'text-muted hover:text-text'}`}>No</button>
                 </div>
             </div>
             <div>
@@ -128,7 +132,7 @@ const PredictionForm: React.FC<PredictionFormProps> = ({ onSubmit, isLoading }) 
             </div>
         </section>
 
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
              <div>
                 <label className="form-label" htmlFor="slope">ST Slope</label>
                 <select id="slope" name="slope" className="form-control" value={formData.slope} onChange={handleChange} required>
@@ -151,7 +155,7 @@ const PredictionForm: React.FC<PredictionFormProps> = ({ onSubmit, isLoading }) 
             </div>
         </section>
 
-        <button type="submit" disabled={isLoading} className="btn btn-primary w-full text-lg">
+        <button type="submit" disabled={isLoading} className="btn btn-primary w-full text-sm mt-8 py-4">
           {isLoading ? 'Analyzing Parameters...' : 'Predict Heart Risk'}
         </button>
       </form>
